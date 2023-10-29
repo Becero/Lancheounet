@@ -1,4 +1,6 @@
 ﻿using Lancheounet.Models;
+using Lancheounet.Repositories.Interfaces;
+using Lancheounet.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -7,11 +9,20 @@ namespace Lancheounet.Controllers
     public class HomeController : Controller
     {
        
+        private readonly ILancheRepository _lancheRepository;
+
+        public HomeController(ILancheRepository lancheRepository)
+        {
+            _lancheRepository = lancheRepository;
+        }
 
         public IActionResult Index()
         {
-            TempData["Nome"] = "Guilherme";
-            return View();
+            var homeViewModel = new HomeViewModel
+            {
+                LanchesPreferidos = _lancheRepository.LanchesPreferidos
+            };
+            return View(homeViewModel   );
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
