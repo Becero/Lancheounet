@@ -16,8 +16,12 @@ namespace Lancheounet.Components
         public IViewComponentResult Invoke()
         {
             var itens = _carrinhoCompra.GetCarrinhoCompraItens();
-            _carrinhoCompra.CarrinhoCompraItems = itens;
+            //var itens = new List<CarrinhoCompraItem>() { 
+            //    new CarrinhoCompraItem(),
+            //    new CarrinhoCompraItem()
+            //};Teste para validar o carrinho
 
+            _carrinhoCompra.CarrinhoCompraItems = itens;
             var carrinhoCompraVM = new CarrinhoCompraViewModel
             {
                 CarrinhoCompra = _carrinhoCompra,
