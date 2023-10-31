@@ -2,6 +2,7 @@
 using Lancheounet.Models;
 using Lancheounet.Repositories;
 using Lancheounet.Repositories.Interfaces;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -54,8 +55,13 @@ public class Startup
 
         app.UseAuthorization();
 
-        app.UseEndpoints(endpoints =>
-        {
+        app.UseEndpoints(endpoints =>        {
+           
+            endpoints.MapControllerRoute(
+                name: "categoriaFiltro",
+                pattern: "Lanche/{action}/{categoria?}",
+                defaults: new {Controller = "Lanche ",action ="List"});
+
             endpoints.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
