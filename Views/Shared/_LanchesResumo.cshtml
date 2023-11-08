@@ -1,14 +1,48 @@
 ﻿@model Lanche
 
+@* <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="..." alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div> *@
 
+
+
+
+<div class="col-sm-4 col-md-4 col-lg-4">    
+    <p><img class="card-img-top" src="@Model.ImagemUrl"></p>   
+    <div class="card-body">
+        <h5 class="card-title">
+            <b>Preço:</b>@Model.Preco.ToString("c")</h5>
+        <a asp-controller="Lanche" asp-action="Details" asp-route-lancheId="@Model.LancheId">
+        <h5 class="card-title"> @Model.Nome </h5>
+        </a>    
+        <p class="card-text">@Model.DescricaoCurta</p>
+        <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra"
+           asp-action="AdicionarItemNoCarrinhoCompra" asp-route-LancheId="@Model.LancheId">
+            Incluir no Carrinho
+        </a>
+    </div>
+</div>
+
+@* 
 <div class="col-sm-4 col-md-4 col-lg-4">
-    <p><img src="@Model.ImagemUrl" class="img-fluid"></p>
+    <div>
+        <p><img src="@Model.ImagemUrl" class="img-fluid" height="150" width="200"></p>
+    </div>
+
     <h3><b>Preço:</b>@Model.Preco.ToString("c")</h3>
 
     <a asp-controller="Lanche" asp-action="Details" asp-route-lancheId="@Model.LancheId">
         @Model.Nome
     </a>
-    <p>@Model.DescricaoCurta</p>
+    <div>
+        <p> <b>@Model.DescricaoCurta </b></p>
+    </div>
+
     <div>
         <p class="button">
             <a class="btn btn-primary" id="cartButton" asp-controller="CarrinhoCompra"
@@ -17,4 +51,5 @@
             </a>
         </p>
     </div>
-</div>
+    </div>
+    *@

@@ -2,6 +2,7 @@
 using Lancheounet.Models;
 using Lancheounet.Repositories.Interfaces;
 using Lancheounet.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lancheounet.Controllers
@@ -29,7 +30,7 @@ namespace Lancheounet.Controllers
             };
             return View(carrinhoCompraVM);
         }
-
+        [Authorize] 
         public IActionResult AdicionarItemNoCarrinhoCompra (int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault( p => p.LancheId == lancheId );
@@ -40,7 +41,7 @@ namespace Lancheounet.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [Authorize]
         public IActionResult RemoverItemDoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(p => p.LancheId == lancheId);

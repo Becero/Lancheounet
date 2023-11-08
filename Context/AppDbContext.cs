@@ -1,9 +1,11 @@
 ﻿using Lancheounet.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Lancheounet.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -11,10 +13,7 @@ namespace Lancheounet.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Lanche> Lanches { get; set; }
         public DbSet<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
-
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<PedidoDetalhe> PedidosDetalhes { get; set; }
-
-
     }
 }

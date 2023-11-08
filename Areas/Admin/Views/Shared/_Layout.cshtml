@@ -11,21 +11,16 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
-            <div class="container">                
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> <img src="~/images/Lanche ou Net (2) (1).png" height="70" /></a>
-                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Inicio </a>
-                <a class="nav-link text-light" asp-area="" asp-controller="Contato" asp-action="Index">Quem Somos</a>
-                <form class="navbar-form navbar-right" asp-controller="Lanche" asp-action="Search" method="get">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Procurar produto" name="searchString" value="@ViewData["searchString"]">
-                    </div>
-                </form>                
-                @await Component.InvokeAsync("CategoriaMenu")                
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">         
-                    @await Component.InvokeAsync("CarrinhoCompraResumo")
-                </div>                
-            </div> 
-            @await Html.PartialAsync("_LoginPartial")
+            <div class="container">
+                <a class="navbar-brand" asp-area="Admin" asp-controller="Admin" asp-action="Index">Admin</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="Admin" asp-action="Index">Inicio</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminLanches" asp-action="Index">Produtos</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminCategorias" asp-action="Index">Categorias</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminPedidos" asp-action="Index">Pedidos</a>
+                    <a class="nav-link text-light" asp-area="Admin" asp-controller="AdminUsuarios" asp-action="Index">Usuarios</a>
+                </div>
+            </div>
         </nav>
     </header>
     <div class="container">
@@ -33,13 +28,11 @@
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2023 - LancheouNet - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
