@@ -1,4 +1,5 @@
-﻿using Lancheounet.Context;
+﻿using Lancheounet.Areas.Admin.Services;
+using Lancheounet.Context;
 using Lancheounet.Models;
 using Lancheounet.Repositories;
 using Lancheounet.Repositories.Interfaces;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ReflectionIT.Mvc.Paging;
 
 namespace Lanchesounet;
 public class Startup
@@ -19,24 +21,16 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<AppDbContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-       
-        services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+        services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-        //services.Configure<IdentityOptions>(options =>
-        //{
-        //    options.Password.RequireDigit = true;
-        //    options.Password.RequireLowercase = true;
-        //    options.Password.RequireNonAlphanumeric = true;
-        //    options.Password.RequireUppercase = true;
-        //    options.Password.RequiredLength = 8;
-        //    options.Password.RequiredUniqueChars = 1;
-        //});
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+        services.AddScoped<RelatorioVendasService>();
 
         services.AddAuthorization(options =>
         {
@@ -44,8 +38,14 @@ public class Startup
                 politica =>
                 {
                     politica.RequireRole("Admin");
-                });        
+                });
         });
+
+
+        services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Home/AccessDenied");
+
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
+
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
@@ -54,6 +54,13 @@ public class Startup
         //que um serviço é solicitado do provedor de serviços.
         services.AddControllersWithViews();
         services.AddMemoryCache();
+
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageindex";
+        });
+
         services.AddSession();
     }
 
